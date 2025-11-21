@@ -1,6 +1,6 @@
 <div class='toolbar flex-row' role="banner">
 	<div>
-		<h2>Jeopardy!</h2>
+		<h2>T-Rex Trivia</h2>
 	</div>
 	<div id='header-icons' class='flex-row'>
 		<div>
@@ -46,6 +46,7 @@
 </div>
 
 <app-game-message *ngIf="modal.showMessage()"></app-game-message>
+<app-answer-feedback *ngIf="modal.showAnswerFeedback()"></app-answer-feedback>
 <app-instructions *ngIf="modal.showInstructions()"></app-instructions>
 <app-analytics *ngIf="modal.showAnalytics()"></app-analytics>
 <app-dispute></app-dispute>

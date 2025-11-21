@@ -1,0 +1,18 @@
+<div class='feedback-container' [class.correct]="isCorrect()" [class.incorrect]="isIncorrect() || isTimeout()" [class.daily-double]="isDailyDouble()">
+    <div class='feedback-content'>
+        <div class='feedback-icon'>
+            <ion-icon *ngIf="isCorrect()" name="checkmark-circle"></ion-icon>
+            <ion-icon *ngIf="isIncorrect() || isTimeout()" name="close-circle"></ion-icon>
+            <ion-icon *ngIf="isDailyDouble()" name="star"></ion-icon>
+        </div>
+        <div class='feedback-text'>
+            <h2 *ngIf="isCorrect()">Correct!</h2>
+            <h2 *ngIf="isIncorrect()">Incorrect</h2>
+            <div *ngIf="isTimeout()">
+                <h2>Time's Up!</h2>
+                <p class='correct-answer'>Correct answer: <b>{{ game.OfficialAnswer() }}</b></p>
+            </div>
+            <h2 *ngIf="isDailyDouble()">Daily Double!</h2>
+        </div>
+    </div>
+</div>

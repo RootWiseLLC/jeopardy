@@ -1,9 +1,46 @@
+.final-answer {
+    font-size: 1.3em;
+    margin-bottom: 30px;
+    text-align: center;
+
+    b {
+        color: var(--jeopardy-blue);
+    }
+}
+
 .player-answer {
     margin: 15px 0;
-    align-items: center; 
 
     button {
         flex: 0;
+        margin-left: 20px;
+    }
+
+    .flex-row {
+        align-items: center;
+    }
+
+    .final-result {
+        margin-top: 8px;
+        margin-left: 0;
+        display: flex;
+        gap: 20px;
+        font-size: 1.1em;
+
+        .gain {
+            color: #10b981;
+            font-weight: 600;
+        }
+
+        .loss {
+            color: #ef4444;
+            font-weight: 600;
+        }
+
+        .final-score {
+            color: var(--jeopardy-blue);
+            font-weight: 600;
+        }
     }
 }
 
@@ -17,4 +54,23 @@
 
 hr {
     margin: 30px 0;
+}
+
+.winner-announcement {
+    animation: fadeIn 1s ease-in;
+    font-size: 1.8em;
+    font-weight: 600;
+    color: var(--jeopardy-blue);
+    margin: 30px 0;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }

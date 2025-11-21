@@ -2,7 +2,7 @@
     <div id='prev-question-info'>
         <p [ngStyle]="{'visibility': game.CurQuestion() != '' ? 'visible' : 'hidden'}">Previous question: {{ game.CurQuestion() }} </p>
         <p [ngStyle]="{'visibility': game.OfficialAnswer() != '' ? 'visible' : 'hidden'}">
-            Previous answer: <b>{{ game.OfficialAnswer() }}</b>
+            Correct answer: <b>{{ game.OfficialAnswer() }}</b>
         </p>
         <app-answers></app-answers>
     </div>

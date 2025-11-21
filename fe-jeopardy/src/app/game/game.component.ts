@@ -29,6 +29,7 @@ function isError(code: number): boolean {
 })
 export class GameComponent implements OnInit {
 	private countdownInterval: NodeJS.Timeout
+	private previousState: GameState
 	protected joinPath: string
 	protected gameMessage: string
 	protected questionAnswer: string
@@ -103,6 +104,7 @@ export class GameComponent implements OnInit {
 			}
 
 			let savedPlayers = this.game.Players()
+			let previousState = this.previousState
 
 			this.game.updateGameState(resp.game)
 			this.player.updatePlayer(resp.curPlayer)
@@ -118,6 +120,44 @@ export class GameComponent implements OnInit {
 				return
 			}
 
+			// Show answer feedback when transitioning from RecvAns to another state (but not in Final Jeopardy)
+			if (previousState === GameState.RecvAns &&
+			    this.game.State() !== GameState.RecvAns &&
+			    this.game.OfficialAnswer() !== '' &&
+			    !this.game.FinalRound()) {
+				// Store playMusic state in localStorage so answer-feedback component can access it
+				localStorage.setItem('playMusic', this.playMusic.toString())
+
+				// Determine feedback type based on answer
+				let feedbackType: 'correct' | 'incorrect' | 'timeout' = 'incorrect'
+				if (this.game.AnsCorrectness()) {
+					feedbackType = 'correct'
+				} else if (this.game.CurAnswer() === 'answer-timeout') {
+					feedbackType = 'timeout'
+				}
+
+				this.modal.displayAnswerFeedback(feedbackType)
+			}
+
+			// Show timeout feedback when no one buzzes in (RecvBuzz timeout) - not in Final Jeopardy
+			if (previousState === GameState.RecvBuzz &&
+			    this.game.State() === GameState.RecvPick &&
+			    this.game.OfficialAnswer() !== '' &&
+			    !this.game.FinalRound()) {
+				// Store playMusic state in localStorage so answer-feedback component can access it
+				localStorage.setItem('playMusic', this.playMusic.toString())
+				this.modal.displayAnswerFeedback('timeout')
+			}
+
+			// Show Daily Double splash when transitioning to RecvWager (but not Final Jeopardy)
+			if (this.game.State() === GameState.RecvWager &&
+			    previousState !== GameState.RecvWager &&
+			    !this.game.FinalRound()) {
+				localStorage.setItem('playMusic', this.playMusic.toString())
+				this.modal.displayAnswerFeedback('daily-double')
+			}
+
+			this.previousState = this.game.State()
 			this.handleScoreChanges(savedPlayers)
 
 			switch (this.game.State()) {

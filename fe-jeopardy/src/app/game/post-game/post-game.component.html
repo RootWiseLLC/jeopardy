@@ -1,29 +1,29 @@
 <div>
-    <div id='question-container'>
-        <p class='question-category'>{{ game.CurCategory() }} </p>
-        <p *ngIf="game.CurComments() != ''">Comments: {{ game.CurComments() }}</p>
-        <div class='question-box'>
-            {{ game.CurQuestion() }}
-        </div>
-        <p>Final Jeopardy Answer: <b>{{ game.OfficialAnswer() }}</b></p>
-    </div>
-    
-
-    <p *ngIf="this.game.HighestScorers().length == 1">The winner is <b>{{ this.game.HighestScorers()[0] }}</b></p>
-    <p *ngIf="this.game.HighestScorers().length == 2">The winners are {{ this.game.HighestScorers()[0] }} and {{ this.game.HighestScorers()[1] }}</p>
-    <p *ngIf="this.game.HighestScorers().length > 2">All players have tied</p>
+    <p class="final-answer">Final Jeopardy Answer: <b>{{ game.OfficialAnswer() }}</b></p>
 
     <div *ngFor="let p of game.Players()">
-        <div class='player-answer flex-row' *ngIf="p.finalAnswer != ''">
-            <span *ngIf="p.finalAnswer != 'answer-timeout'">
-                {{ p.name }} answered <b>{{ p.finalCorrect ? 'correctly': 'incorrectly' }}</b> with <b>{{ p.finalAnswer }}</b>
-            </span>
-            <button *ngIf="p.finalAnswer != 'answer-timeout' && canProtestForPlayer(p)"
-                (click)="protestFinalCorrectness(p.id)">Dispute</button>
-    
-            <span *ngIf="p.finalAnswer == 'answer-timeout'">{{ p.name }} didn't answer in time.</span>
+        <div class='player-answer' *ngIf="p.finalAnswer != '' && isPlayerRevealed(p.id)">
+            <div class='flex-row'>
+                <span *ngIf="p.finalAnswer != 'answer-timeout'">
+                    {{ p.name }} answered <b>{{ p.finalCorrect ? 'correctly': 'incorrectly' }}</b> with <b>{{ p.finalAnswer }}</b>
+                </span>
+                <button *ngIf="p.finalAnswer != 'answer-timeout' && canProtestForPlayer(p)"
+                    (click)="protestFinalCorrectness(p.id)">Dispute</button>
+
+                <span *ngIf="p.finalAnswer == 'answer-timeout'">{{ p.name }} didn't answer in time.</span>
+            </div>
+            <div class='final-result' *ngIf="p.finalAnswer != 'answer-timeout'">
+                <span [class.gain]="p.finalCorrect" [class.loss]="!p.finalCorrect">
+                    {{ p.finalCorrect ? '+' : '-' }}${{ p.finalWager }}
+                </span>
+                <span class='final-score'>Final score: ${{ p.score }}</span>
+            </div>
         </div>
     </div>
+
+    <p class="winner-announcement" *ngIf="showWinner && this.game.HighestScorers().length == 1">The winner is <b>{{ this.game.HighestScorers()[0] }}</b></p>
+    <p class="winner-announcement" *ngIf="showWinner && this.game.HighestScorers().length == 2">The winners are {{ this.game.HighestScorers()[0] }} and {{ this.game.HighestScorers()[1] }}</p>
+    <p class="winner-announcement" *ngIf="showWinner && this.game.HighestScorers().length > 2">All players have tied</p>
 
     <hr>
 

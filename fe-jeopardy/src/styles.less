@@ -1,11 +1,18 @@
 :root {
-    --jeopardy-blue: #060ce9;
-    --jeopardy-lightblue: #d7ebff;
+    --jeopardy-blue: #8b5cf6;
+    --jeopardy-lightblue: #ede9fe;
     --jeopardy-yellow: #ffcc00;
     --header-height: 50px;
     --players-container-width: 15em;
     --question-box-width: 450px;
     --question-box-padding: 30px;
+}
+
+body {
+    font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.6;
 }
 
 input,
@@ -15,19 +22,119 @@ button {
     border: 1px solid grey;
 }
 
+input {
+    border: 2px solid #d1d5db;
+    transition: all 0.3s ease;
+}
+
 input:focus {
-    outline: 1px solid grey;
+    outline: none;
+    border-color: var(--jeopardy-blue);
+    box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
 }
 
 button {
-    background-color: #f0f0f0;
+    background: linear-gradient(135deg, var(--jeopardy-blue) 0%, #a78bfa 100%);
+    color: white;
+    font-weight: 500;
+    border: none;
+    border-radius: 12px;
+    padding: 12px 24px;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow:
+        0 4px 6px rgba(139, 92, 246, 0.2),
+        0 1px 3px rgba(0, 0, 0, 0.08);
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    font-size: 16px;
 }
 
 button:hover {
-    background-color: #f4f4f4;
-    cursor: pointer;
-    -webkit-box-shadow: 0 1px 1px 0 rgba(60, 64, 67, .30), 0 1px 3px 1px rgba(60, 64, 67, .15);
-    box-shadow: 0 1px 1px 0 rgba(60, 64, 67, .30), 0 1px 3px 1px rgba(60, 64, 67, .15);
+    transform: translateY(-2px);
+    box-shadow:
+        0 8px 12px rgba(139, 92, 246, 0.3),
+        0 4px 6px rgba(0, 0, 0, 0.1);
+    background: linear-gradient(135deg, #7c3aed 0%, #a78bfa 100%);
+}
+
+button:active {
+    transform: translateY(0);
+    box-shadow:
+        0 2px 4px rgba(139, 92, 246, 0.2),
+        0 1px 2px rgba(0, 0, 0, 0.06);
+}
+
+button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+}
+
+button:disabled:hover {
+    transform: none;
+    box-shadow:
+        0 4px 6px rgba(139, 92, 246, 0.2),
+        0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+// Button variants
+button.secondary {
+    background: linear-gradient(135deg, var(--jeopardy-lightblue) 0%, #ddd6fe 100%);
+    color: var(--jeopardy-blue);
+    box-shadow:
+        0 4px 6px rgba(139, 92, 246, 0.1),
+        0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+button.secondary:hover {
+    background: linear-gradient(135deg, #ddd6fe 0%, #c4b5fd 100%);
+    box-shadow:
+        0 8px 12px rgba(139, 92, 246, 0.15),
+        0 4px 6px rgba(0, 0, 0, 0.08);
+}
+
+button.danger {
+    background: linear-gradient(135deg, #ef4444 0%, #f87171 100%);
+    box-shadow:
+        0 4px 6px rgba(239, 68, 68, 0.2),
+        0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+button.danger:hover {
+    background: linear-gradient(135deg, #dc2626 0%, #ef4444 100%);
+    box-shadow:
+        0 8px 12px rgba(239, 68, 68, 0.3),
+        0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+button.success {
+    background: linear-gradient(135deg, #10b981 0%, #34d399 100%);
+    box-shadow:
+        0 4px 6px rgba(16, 185, 129, 0.2),
+        0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+button.success:hover {
+    background: linear-gradient(135deg, #059669 0%, #10b981 100%);
+    box-shadow:
+        0 8px 12px rgba(16, 185, 129, 0.3),
+        0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+button.gold {
+    background: linear-gradient(135deg, var(--jeopardy-yellow) 0%, #ffd700 100%);
+    color: #1f2937;
+    box-shadow:
+        0 4px 6px rgba(255, 204, 0, 0.3),
+        0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+button.gold:hover {
+    background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+    box-shadow:
+        0 8px 12px rgba(255, 204, 0, 0.4),
+        0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .flex-row {
@@ -149,7 +256,7 @@ button:hover {
 }
 
 .link {
-    color: blue;
+    color: #8b5cf6;
     user-select: none;
 }
 

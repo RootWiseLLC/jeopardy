@@ -10,6 +10,7 @@ import { GameStateService } from 'src/app/services/game-state.service';
 export class PlayerPodiumComponent {
 	@Input() player: Player;
 	@Input() scoreChanges: any = {}
+	protected imageError: boolean = false;
 
 	constructor(protected game: GameStateService) { }
 
@@ -26,5 +27,9 @@ export class PlayerPodiumComponent {
 
 	onClock(player: Player): boolean {
 		return player.canPick || player.canAnswer || player.canWager
+	}
+
+	onImageError(): void {
+		this.imageError = true;
 	}
 }

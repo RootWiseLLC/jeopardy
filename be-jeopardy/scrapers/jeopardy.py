@@ -40,8 +40,11 @@ print('number of games', len(rows))
 questions = []
 
 games = 1
+MAX_GAMES = 10
 for row in rows:
-    print(f'{games}/{len(rows)}')
+    if games > MAX_GAMES:
+        break
+    print(f'{games}/{MAX_GAMES}')
     games += 1
     tds = row.find_all('td')
     assert (len(tds) == 3)

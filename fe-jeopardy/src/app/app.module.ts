@@ -16,6 +16,7 @@ import { PwReqComponent } from './auth/pw-req/pw-req.component';
 import { RegisterComponent } from './auth/register/register.component';
 import { DisputeComponent } from './dispute/dispute.component';
 import { GameMessageComponent } from './game-message/game-message.component';
+import { AnswerFeedbackComponent } from './game/answer-feedback/answer-feedback.component';
 import { BoardIntroComponent } from './game/board-intro/board-intro.component';
 import { ChatComponent } from './game/chat/chat.component';
 import { GameComponent } from './game/game.component';
@@ -56,6 +57,7 @@ import { WarningComponent } from './warning/warning.component';
     InstructionsComponent,
     DisputeComponent,
     GameMessageComponent,
+    AnswerFeedbackComponent,
     ConfigComponent,
     AnswersComponent,
     PlayerPodiumComponent,
