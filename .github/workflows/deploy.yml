@@ -3,6 +3,9 @@ name: Build Frontend
 on:
   push:
     branches: [master, main]
+    paths:
+      - 'fe-jeopardy/**'
+      - '.github/workflows/deploy.yml'
   workflow_dispatch:
 
 permissions:
