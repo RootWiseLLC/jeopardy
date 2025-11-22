@@ -23,8 +23,8 @@ services:
       GIN_MODE: release
       DATABASE_URL: postgresql://postgres:${POSTGRES_PASSWORD:-postgres}@postgres:5432/postgres?sslmode=disable
       ALLOW_ORIGIN: https://${DOMAIN:-localhost}
-      JWT_RS512_KEY: ${JWT_PRIVATE_KEY}
-      JWT_RS512_PUB_KEY: ${JWT_PUBLIC_KEY}
+      JWT_RS512_KEY: ${JWT_RS512_KEY}
+      JWT_RS512_PUB_KEY: ${JWT_RS512_PUB_KEY}
     depends_on:
       postgres:
         condition: service_healthy
