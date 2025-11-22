@@ -34,7 +34,7 @@ services:
   frontend:
     image: nginx:alpine
     volumes:
-      - ./fe-jeopardy/dist/fe-jeopardy/browser:/usr/share/nginx/html:ro
+      - ./fe-jeopardy/dist/jeopardy:/usr/share/nginx/html:ro
     ports:
       - "80:80"
 
