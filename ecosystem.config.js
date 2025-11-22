@@ -22,10 +22,9 @@ module.exports = {
       name: 'jeopardy-frontend',
       cwd: './fe-jeopardy',
       script: 'pnpm',
-      args: 'run ng serve',
-      autorestart: true,
+      args: 'run ng build --configuration production',
+      autorestart: false,
       watch: false,
-      max_memory_restart: '1G',
       error_file: '../logs/frontend-error.log',
       out_file: '../logs/frontend-out.log',
       log_date_format: 'YYYY-MM-DD HH:mm:ss Z'

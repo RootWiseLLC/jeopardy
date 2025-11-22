@@ -1,0 +1,52 @@
+name: Build Frontend
+
+on:
+  push:
+    branches: [master, main]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '23'
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          version: 8
+
+      - name: Install frontend dependencies
+        working-directory: ./fe-jeopardy
+        run: pnpm install
+
+      - name: Build frontend
+        working-directory: ./fe-jeopardy
+        run: pnpm run ng build --configuration production
+
+      - name: Commit built frontend
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add fe-jeopardy/dist/
+          git diff --staged --quiet || git commit -m "Build: Frontend production build [skip ci]"
+          git push
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build backend Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: ./be-jeopardy
+          push: false
+          tags: jeopardy-backend:latest
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
