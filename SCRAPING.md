@@ -33,12 +33,16 @@ mv scrapers/*.tsv clues/
 SSH into your Coolify server and run:
 
 ```bash
-# Navigate to your deployed app directory
-cd /data/coolify/trextrivia-tools # manual clone of repo (git clone on server)
+# Navigate to your deployed app directory (the same folder Coolify deploys)
+cd /data/coolify/applications/ps0cc4c8cw0okc0cg8ogs840
 
-# Run scraper using the same docker-compose.yml that Coolify deploys
-docker compose --profile tools build scraper
-docker compose --profile tools run --rm scraper jeopardy
+# Only once: clone or update the repo so this directory contains be-jeopardy/Dockerfile.scraper
+git fetch origin
+git reset --hard origin/master
+
+# Run scraper against the live stack
+docker compose -f docker-compose.scraper.yml build scraper
+docker compose -f docker-compose.scraper.yml run --rm scraper jeopardy
 ```
 
 ## Available Scrapers

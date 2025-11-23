@@ -11,12 +11,14 @@ services:
     environment:
       DATABASE_URL: postgresql://postgres:${POSTGRES_PASSWORD:-postgres}@postgres:5432/postgres?sslmode=disable
     volumes:
-      # Mount clues directory so scraped data persists
       - ./be-jeopardy/clues:/app/clues
-      # Mount scrapers so you can edit them without rebuilding
       - ./be-jeopardy/scrapers:/app/scrapers
       - ./be-jeopardy/insert_clues.py:/app/insert_clues.py
       - ./be-jeopardy/add_alternatives.py:/app/add_alternatives.py
-    network_mode: host  # Access localhost postgres
-    profiles:
-      - tools  # Don't start automatically
+    networks:
+      - coolify
+
+networks:
+  coolify:
+    external: true
+    name: ps0cc4c8cw0okc0cg8ogs840
