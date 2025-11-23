@@ -19,10 +19,10 @@ export class ConfigComponent {
 		return !this.oneRoundChecked
 	}
 	protected botConfig: number = 0
-	protected pickConfig: number = 20
-	protected buzzConfig: number = 20
-	protected answerConfig: number = 12
-	protected wagerConfig: number = 20
+	protected pickConfig: number = 30
+	protected buzzConfig: number = 30
+	protected answerConfig: number = 15
+	protected wagerConfig: number = 30
 	protected firstRoundCategories: any[] = []
 	protected secondRoundCategories: any[] = []
 	protected searchResults: any[] = []
