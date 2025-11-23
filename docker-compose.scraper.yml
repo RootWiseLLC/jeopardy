@@ -15,10 +15,10 @@ services:
       - ./be-jeopardy/scrapers:/app/scrapers
       - ./be-jeopardy/insert_clues.py:/app/insert_clues.py
       - ./be-jeopardy/add_alternatives.py:/app/add_alternatives.py
-    networks:
-      - coolify
+#     networks:
+#       - coolify
 
-networks:
-  coolify:
-    external: true
-    name: ps0cc4c8cw0okc0cg8ogs840
+# networks:
+#   coolify:
+#     external: true
+#     name: ps0cc4c8cw0okc0cg8ogs840

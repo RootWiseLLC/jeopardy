@@ -127,10 +127,12 @@ export class GameComponent implements OnInit {
 			    !this.game.FinalRound()) {
 				// Determine feedback type based on answer
 				let feedbackType: 'correct' | 'incorrect' | 'timeout' = 'incorrect'
-				if (this.game.AnsCorrectness()) {
-					feedbackType = 'correct'
-				} else if (this.game.CurAnswer() === 'answer-timeout') {
+				const curAnswer = this.game.CurAnswer()
+				// Check for timeout first (empty answer or explicit timeout marker)
+				if (!curAnswer || curAnswer === '' || curAnswer === 'answer-timeout') {
 					feedbackType = 'timeout'
+				} else if (this.game.AnsCorrectness()) {
+					feedbackType = 'correct'
 				}
 
 				this.modal.displayAnswerFeedback(feedbackType)

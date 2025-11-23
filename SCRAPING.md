@@ -4,7 +4,7 @@ The scraping system is **completely separate** from the main deployment. You can
 
 ## Quick Start
 
-### Local Development
+### Local Development (scrape + upload flow)
 
 ```bash
 # 1. Start PostgreSQL
@@ -28,21 +28,26 @@ mv scrapers/*.tsv clues/
 .venv/bin/python add_alternatives.py
 ```
 
-### On Coolify Server
-
-SSH into your Coolify server and run:
+### On Coolify Server (load data from local scrape)
 
 ```bash
-# Navigate to your deployed app directory (the same folder Coolify deploys)
-cd /data/coolify/applications/ps0cc4c8cw0okc0cg8ogs840
-
-# Only once: clone or update the repo so this directory contains be-jeopardy/Dockerfile.scraper
-git fetch origin
-git reset --hard origin/master
-
-# Run scraper against the live stack
+# 1. Run the scraper locally (see steps above). The TSV lands under be-jeopardy/scrapers/
+# in LOCAL BUILD root...
+# First comment out the network stuff in docker-compose.scraper.yml
 docker compose -f docker-compose.scraper.yml build scraper
 docker compose -f docker-compose.scraper.yml run --rm scraper jeopardy
+# then uncomment the network stuff
+
+# 2. Copy the TSV to the server
+scp be-jeopardy/clues/jeopardy_seasons_30_40.tsv \
+    root@5.161.234.29:/data/coolify/applications/ps0cc4c8cw0okc0cg8ogs840/be-jeopardy/clues/
+
+# 3. Load the TSV into the production database
+# on server...
+cd /data/coolify/applications/ps0cc4c8cw0okc0cg8ogs840
+docker compose -f docker-compose.scraper.yml run --rm \
+  --entrypoint bash \
+  scraper -c "python insert_clues.py && python add_alternatives.py"
 ```
 
 ## Available Scrapers

@@ -9,7 +9,7 @@ from bs4 import BeautifulSoup
 
 SEASON_START = 30
 SEASON_END = 40
-MAX_GAMES = 10  # total games scraped across all seasons (adjust for testing)
+MAX_GAMES = 2000  # total games scraped across all seasons (adjust for testing)
 
 SCRIPT_DIR = Path(__file__).resolve().parent
 OUTPUT_FILE = SCRIPT_DIR / 'jeopardy_seasons_30_40.tsv'
@@ -106,7 +106,7 @@ def scrape_game(path):
     return extracted
 
 
-def scrape_season(season_num, games_needed, collected):
+def scrape_season(season_num, games_needed, collected, games_scraped):
     url = f'https://j-archive.com/showseason.php?season={season_num}'
     response = requests.get(url)
     if response.status_code != 200:
@@ -122,21 +122,28 @@ def scrape_season(season_num, games_needed, collected):
     print(f'Season {season_num}: found {len(games)} games')
 
     for path in games:
-        if len(collected) >= games_needed:
+        if games_scraped >= games_needed:
             break
-        collected.extend(scrape_game(path))
-    return collected
+        game_clues = scrape_game(path)
+        if not game_clues:
+            continue
+        collected.extend(game_clues)
+        games_scraped += 1
+        print(f'Total games scraped: {games_scraped}/{games_needed}')
+    return collected, games_scraped
 
 
 def main():
     games_needed = MAX_GAMES if MAX_GAMES > 0 else float('inf')
     questions = []
+    games_scraped = 0
 
     for season in range(SEASON_START, SEASON_END + 1):
-        if len(questions) >= games_needed:
+        if games_scraped >= games_needed:
             break
         print(f'--- Scraping season {season} ---')
-        questions = scrape_season(season, games_needed, questions)
+        questions, games_scraped = scrape_season(
+            season, games_needed, questions, games_scraped)
 
     with open(OUTPUT_FILE, 'w') as file:
         csv_writer = csv.writer(file, delimiter='\t')
