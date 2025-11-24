@@ -35,6 +35,10 @@ jobs:
         working-directory: ./fe-jeopardy
         run: pnpm install
 
+      - name: Clear Angular cache
+        working-directory: ./fe-jeopardy
+        run: rm -rf .angular/cache || true
+
       - name: Build frontend
         working-directory: ./fe-jeopardy
         run: pnpm run ng build --configuration production
